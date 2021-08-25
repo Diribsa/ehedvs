@@ -1,1 +1,1 @@
-web: gunicorn CCMS.wsgi --lof-file--
+web: gunicorn ehedvs.wsgi --lof-file--
