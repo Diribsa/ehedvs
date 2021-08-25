@@ -1,0 +1,67 @@
+        {% extends 'registrar_admin/main.html' %}
+        {% load static %}
+        {% load crispy_forms_tags %}
+        {% block subtitle %}Account{% endblock %}
+        {% block first %}home {% endblock %}
+        {% block second %}account{% endblock %}
+ 
+       {% block content%}
+  
+       <div class="row ml-5">
+        <div class="col-lg-9">
+            <div class="register">
+                <div class="register-logo">
+                  <b style="font-family: Source;">Create Account for Registerar Staff</b>
+                </div>
+              
+                <div class="card ">
+                  <div class="card-body register-card-body">
+               
+                    <form action="" method="POST">
+                      {% csrf_token %}
+
+                      <div class="row">
+                        <div class="col-md-6">
+                            {{form.first_name|as_crispy_field}} 
+                        </div>
+                        <div class="col-md-6">
+                          {{form.last_name|as_crispy_field}} 
+                      </div>
+                        
+                       </div>
+
+                       <div class="row">
+                       
+                        <div class="col-md-6">
+                          {{form.username|as_crispy_field}}
+                      </div>
+                        <div class="col-md-6">
+                          {{form.email|as_crispy_field}}
+                      </div>
+                       
+                       </div>
+                      
+                          <div class="row ">
+                            <div class="col-md-4">
+                              {{form.password1|as_crispy_field}}
+                          </div>
+                            <div class="col-md-4">
+                              {{form.password2|as_crispy_field}} 
+                             </div>
+                            <div class="col-md-4" style="margin-top: 30px;">
+                              <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-database"></i>&nbsp;  Register</button>
+                            </div>
+                        
+                      </div>
+                    </form>
+                   
+                  </div>
+                  <!-- /.form-box -->
+                </div><!-- /.card -->
+              </div>
+
+        </div>
+       </div>
+
+      {% endblock %}
+      

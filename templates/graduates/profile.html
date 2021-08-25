@@ -1,0 +1,22 @@
+{% extends 'graduates/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %} {% endblock %}
+{% block first %}Home {% endblock %}
+{% block second %}profile{% endblock %}
+{% block content%}
+
+    <div class="content-section">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+          <div class="card">
+                <h5 class="card-header">Update profile of the student</h5>
+            <div class="card-body">
+                {{ p_form|crispy }}
+                <button class="btn btn-info" type="submit">Update</button>
+            </div>
+        </div>
+        </form>
+       
+    </div>
+    {% endblock %}

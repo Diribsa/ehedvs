@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>e-HECAS | Log in</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+   <!-- Font Awesome Icons -->
+   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+   <!-- Theme style -->
+   <link rel="stylesheet" href="{% static 'dist/css/e-hedvs.min.css ' %}">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box border-dark" style="margin-top: -150px;">
+  <img src="{% static 'dist/img/gra.jpg' %}" alt="User Avatar" class="img-size-50  mr-3 img-circle" style="margin-left: 150px;">
+  <div class="login-logo">
+    <a href="#"><b class="text-primary">e</b>-HEDVS</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body" >
+      <p class="login-box-msg"><strong> Sign-in</strong></p>
+
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input type="text"  name="username"  class="form-control" placeholder="User name" required >
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input  name="password"  type="password" class="form-control" placeholder="Password" required   >
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="icheck-primary">
+              <input type="checkbox" id="remember">
+              <label for="remember">
+                Remember Me
+              </label>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+
+      <p  class="border-bottom pt-3">
+        <a href="#">Did you forget your password?</a>
+      </p>
+      <div>
+        {% for message in messages %}
+        <p class="text-warning"> {{message}}</p>
+      </div>
+      
+      
+      {% endfor%}
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- e-HEDVS App -->
+<script src=" {% static 'dist/js/e-hedvs.min.js' %}"></script>
+</body>
+</html>

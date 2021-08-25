@@ -1,0 +1,98 @@
+{% extends 'super_admin/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+
+{% endblock %}
+{% block subtitle %}Request{% endblock %}
+{% block first %}home {% endblock %}
+{% block second %}University{% endblock %}
+
+{% block content%}
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-12 c card m-0 ">
+            <!-- DATA TABLE-->
+            <div class="table-responsive ">
+                <table class="table table-borderless table-hover table-striped ">
+                    <thead class=" bg-olive">
+                        <tr>
+                            <th>Date</th>
+                            <th>Sender( <span class="text-black-50">ADIMN</span> of) </th>
+                            <th style="width: 300px;">Request</th>
+                            <th class="">Status</th>
+                             <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="request-status">
+                        {% for subject in subjects %}
+                        <tr >
+                            <td class="text-info">{{subject.timestamp|timesince}} ago</td>
+                            <td class='text-capitalize'>{{subject.sender.university}}</td>
+                            {% if subject.status == 'pending'%}
+                            <td class="text-info">{{subject.request}}</td>
+                            <td class="text-info" >{{subject.status}}</td>
+                            <td class="ml-5">
+                                <a href="{% url 'super_admin:approve_request' subject.id %}"
+                                 class="btn btn-info btn-sm offset-2 mr-1 pl-3">  approve</a>
+                            </td>
+                            {% endif %}
+                            {% if subject.status == 'approved' %}
+                            <td class="text-success" style="text-decoration: line-through;">{{subject.request}}</td>
+                            <td class="text-success" style="text-decoration: line-through;">{{subject.status}}</td>
+                            <td class="ml-5" >
+                                <a style="text-decoration: line-through;"
+                                 href="{% url 'super_admin:approve_request' subject.id %}"
+                                  class="btn btn-outline-success btn-sm offset-2 mr-1 disabled" >approved</a>
+                            </td>
+                            
+                            {% endif %}
+                            {% if subject.status == 'expired' %}
+                            <td class="text-danger" style="text-decoration: line-through;">{{subject.request}}</td>
+                            <td class="text-danger" style="text-decoration: line-through;">{{subject.status}}</td>
+                            <td class="ml-5" >
+                                <a style="text-decoration: line-through;"
+                                 href="{% url 'super_admin:approve_request' subject.id %}"
+                                  class="btn btn-outline-danger btn-sm offset-2 mr-1 disabled" >expired</a>
+                            </td>
+                            
+                            {% endif %}
+
+                        </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- END DATA TABLE-->
+        </div>
+    </div>
+   
+</div>
+{% endblock %}
+{% block javascript %}
+
+<script>
+    $(document).ready(function(){
+       var status =   setInterval(function(){
+           
+                $.ajax({url: "{% url 'super_admin:check' %}", success: function(result){
+                console.log(result)
+                if (result=='none'){
+                    clearInterval(status)
+
+                }
+                if(result == 'expired') { 
+                    $("#request-status tr:eq(0) td").toArray()[3].innerHTML = "expired"
+                   clearInterval(status)
+                    
+                }
+                if(result == 'pending') {
+                    clearInterval(status)
+                }
+
+            }});
+            }, 2000);
+
+    });
+</script>
+{% endblock%}

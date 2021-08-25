@@ -1,0 +1,100 @@
+{% extends 'registrar_admin/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %}Program{% endblock %}
+{% block first %}program {% endblock %}
+{% block second %}program{% endblock %}
+{% block content%}
+   <div class="row">
+    <div class="col-6">
+        <div class="card card-info">
+            <div class="card-header">
+              <h3 class="card-title ">Register programs</h3>
+  
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              
+              <form action="" method="POST">
+                  {% csrf_token %}
+                  {{program|as_crispy_errors }}
+                  {{program.faculty|as_crispy_field}}
+                  {{program.name|as_crispy_field}}
+                  {{program.year_required|as_crispy_field}}
+                  {{program.degree_type|as_crispy_field}}
+              
+                  <button class="btn btn-outline-primary" type="submit">register</button>
+              </form>
+          
+            </div>
+            <!-- /.card-body -->
+            <!--
+            <div class="card-footer bg-info">
+              Visit <a href="e-HEDVS">view user guide</a> for more clarification
+            </div>
+            -->
+          </div>
+    </div>
+    <div class="col-6">
+        <div class="card card-dark">
+            <div class="card-header">
+              <h3 class="card-title">Registered programs</h3>
+    
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>year required</th>
+                    <th> type of degree</th>
+                  </tr>
+                </thead>
+                <tbody>
+         {% for program in programs %}
+                  <tr>
+                    <td>{{program.name}}</td>
+                    <td>{{program.year_required}}</td>
+                    <td>{{program.degree_type}}</td>
+                    <!--
+                    <td class="text-right py-0 align-middle">
+                      <div class="btn-group btn-group-sm">
+                        <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                        <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                      </div>
+                    </td>
+                    -->
+                 
+                  </tr>
+                  {% endfor%}
+                  
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+            <!--
+            <div class="card-footer bg-gray">
+              <h class="text-white">  Recent registered program</h></h3>
+            </div>
+           -->
+          </div>
+    </div>
+  
+</div>
+ 
+
+
+
+
+
+{% endblock %}

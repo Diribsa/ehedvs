@@ -1,0 +1,62 @@
+{% extends 'graduates/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %}Upload Academical status{% endblock %}
+{% block first %}Home {% endblock %}
+{% block second %}Acadamical status{% endblock %}
+{% block content%}
+
+<div>
+  {% if messages %}
+  {% for m in messages %}
+  <script>
+    Swal.fire({
+      "title":"Success!",
+      "text":"{{m}}",
+      "icon":"success",
+      "width":400,
+      "height":100,
+
+    })
+  </script>
+  {% endfor %}
+  {% endif %}
+
+</div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-6 shadow m-3 p-3 bg-white">
+          <form action="" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleInputFile"><span class="text-black">  Excel File Input</span>
+                      <i class="fas fa-hand-holding-water text-truncate text-primary ml-1"></i></label>
+                <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="exampleInputFile" name="myfile" required>
+                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-primary input-group-append">Upload</button>
+                    </div>
+                  </div>
+              </div>
+          </form>   
+      </div>
+  </div>  
+</div>
+
+
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/bs-custom-file-input/bs-custom-file-input.min.js' %}"></script>
+<script src=" {% static 'dist/js/e-hedvs.min.js' %}"></script>
+<script>
+  $(function () {
+    bsCustomFileInput.init();
+  });
+  </script>
+
+{% endblock %}

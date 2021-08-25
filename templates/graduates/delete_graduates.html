@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-HEDVS|delete</title>
+    <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/e-hedvs.min.css ' %}">
+    
+
+
+</head>
+<body>
+  {% if num == 0 %}
+  <div class="container mt-4 ">
+     <div class="row ">
+         <div class="col-4 shadow-sm p-2 ">
+            <h6>No records found with selected <span class="text-warning">date</span></h6> 
+            <a href="{% url 'graduates:student' %}" > go back</a>
+         </div>
+     </div>
+    
+  </div>
+  
+  
+  <!-- Modal -->
+  
+    
+    {% else %}
+
+    <div class="container mt-4">
+        <h5>Are you sure you want to delete multiple records and related data ?</h5>
+             <ul>
+                 <li><strong>Graduates: {{num}}</strong></li>
+             </ul>
+        
+        <form action="{% url 'graduates:delete' search_term %}" method="POST" >
+            {% csrf_token %}
+            <a href="{% url 'graduates:student' %}" class="btn btn-lg btn-info ml-2">Cancel</a>
+            <input type="submit" name='delete' value="Yes" class="btn btn-lg btn-danger ">
+    
+        </form>
+     </div> 
+
+     {% endif %}
+             
+            
+                
+                
+            
+                
+   
+    <!-- REQUIRED SCRIPTS -->
+
+
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- ehedvs App -->
+<script src=" {% static 'dist/js/e-hedvs.min.js' %}"></script>
+
+</body>
+</html>

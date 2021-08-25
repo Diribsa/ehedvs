@@ -1,0 +1,130 @@
+{% extends 'graduates/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %}Student Academical Status {% endblock %}
+{% block first %}Home {% endblock %}
+{% block second %}Student Status{% endblock %}
+{% block content%}
+<div>
+  {% if messages %}
+  {% for m in messages %}
+  <script>
+    Swal.fire({
+      "title":"Success!",
+      "text":"{{m}}",
+      "icon":"success",
+      "width":400,
+      "height":100,
+
+    })
+  </script>
+  {% endfor %}
+  {% endif %}
+
+</div>
+
+<div class="row mt-3 mb-3">
+  <div class="col-sm-7">
+    <div class="callout callout-success p-4">
+           <h5><i class="fas fa-info"></i> <span class="text-primary">Note:</span> </h5>
+           <p>  This page has been designed for enabling you to interact with student registry you have uploaded.
+            You can select the number of records viewed on the page.
+           . And also you can search through your upload  records </p>
+           
+         </div>
+ </div>
+  <div class="col-sm-5">
+    <form action="{% url 'graduates:search' %}" method="GET">
+      <div class="card card-purple ">
+      <h6 class="card-header"> <i class="fa fa-trash-alt text-sm mr-3"></i>Delete Multiple records</h6>
+      <div class="card-body">
+        <label for="date" >Select registration date to delete</label>
+        <div class="input-group">
+        <input type="date" name="date" class="form-control" id="date" placeholder="Select Date to delete multiple records" required/>
+        <button type="submit" class="btn  ml-2" >
+          <i class="fa fa-trash-alt text-lg text-danger"></i>
+      </button>
+        </div>
+         
+      </div>
+  
+    </div>
+  </form>
+  </div>
+  </div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title text-purple">Student Registry</h3>
+        <div class="card-tools">
+          <div class="input-group input-group-sm" >
+            <i class="fas fa-pencil-alt text-purple"></i>
+                
+          </div>
+        </div>
+      </div>
+      <!-- ./card-header -->
+      <div class="card-body">
+        <table class="table  table-borderless table-hover student_table">
+          <thead  >
+            <tr>
+              <th>Image</th>
+              <th>Id</th>
+              <th >Student</th>
+              <th>Registration Date</th>
+              <th class=" text-center">Academical Status</th>
+              <th>School and Department</th>
+             
+            </tr>
+          </thead>
+          <tbody>
+            {% for graduate in graduates %}
+            <!--<tr data-widget="expandable-table" aria-expanded="false"> -->
+            <tr >
+              <td> 
+                <a href="{% url 'graduates:profile' graduate.id %}">
+                <img  class="rounded-circle account-img" 
+                style="width:50px; height: 50px;" src="{{graduate.profile.image.url}}" alt="wrong"> </td>
+              </a>
+              <td >{{graduate.id}}</td>
+              <td>{{graduate}}</td>
+              <td>{{graduate.registration_year}}</td>
+              <td class="text-center ">
+                <a href=" {% url 'graduates:status_detail' graduate.id %}" ><i class="fas fa-ellipsis-v text-info "></i></a>
+              </td>
+              <td class="text-center">
+                <a href="{% url 'graduates:dept' graduate.id %}"><i class="fa fa-pen-alt"></i></a>
+              </td>
+            </tr>
+            {% endfor %}
+            
+            </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+</div>
+
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+
+<!-- e-HEDVS App -->
+<script src=" {% static 'dist/js/e-hedvs.min.js' %}"></script>
+<script>
+    $('.student_table').DataTable({
+         ordering:false,
+        //"order":[[2, "desc"]],
+        lengthMenu:[[5,10,15,50,-1],[5,10,15,50,"All"]],
+       
+    });
+</script>
+
+
+{% endblock %}

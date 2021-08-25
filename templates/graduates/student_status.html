@@ -1,0 +1,179 @@
+{% extends 'graduates/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block subtitle %}Student Academical Status {% endblock %}
+{% block first %}Home {% endblock %}
+{% block second %}Student Status{% endblock %}
+{% block content%}
+<div>
+  {% if messages %}
+  {% for m in messages %}
+  <script>
+    Swal.fire({
+      "title":"Success!",
+      "text":"{{m}}",
+      "icon":"success",
+      "width":400,
+      "height":100,
+
+    })
+  </script>
+  {% endfor %}
+  {% endif %}
+
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-body pl-5">
+      <form method="GET">
+        <h6 class="text-purple"><i class="fas fa-filter mr-1 "></i>Filter Data</h6>
+        <hr>
+      <div class="row ml-5">
+        <div class="form-group col-sm-4 col-md-3">
+          <span class="text-muted"> {{myfilter.form.batch.label_tag}}</span>
+         
+          {% render_field myfilter.form.batch class="form-control text-success " %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <span class="text-muted"> {{myfilter.form.semester.label_tag}}</span>
+         
+          {% render_field myfilter.form.semester class="form-control text-success" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          <span class="text-muted"> {{myfilter.form.academic_status.label_tag}}</span>
+         
+          {% render_field myfilter.form.academic_status class="form-control text-success" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3 mt-auto">
+          <button class="btn btn-success" type="submit"><i class="fas fa-search mr-1 "></i>Search</button>
+        </div>
+        
+      </div>
+
+       
+
+      </form>
+     
+
+      
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3  offset-9 ">
+    <div class="card card-purple collapsed-card">
+      <div class="card-header">
+        <h1 class="card-title text-white" style="font-style: oblique; font-size: 16px;"> <i class="fa fa-info text-white mr-1"></i> Deleting multiple records</h1>
+
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <!-- /.card-tools -->
+      </div>
+      <div class="card-body">
+        <form action="" method="POST">
+          {% csrf_token %}
+       <div class="row">
+        {% if deletion_number > 0 %}
+        <div class="col-9">
+          <blockquote class="quote-purple">
+            <p class="text-primary">You are about to delete <strong>
+              <span class="text-danger ">{{deletion_number}}</span>  records</p> </strong>
+          </blockquote>
+        </div>
+        <div class="col-3">
+          <button  class="btn btn-outline-danger"><i class="fa fa-trash-alt"></i></button>
+          </div>
+        {% endif %}
+        
+        {% if deletion_number == 0 %}
+        <div class="col-10">
+          <blockquote class="quote-purple">
+          <p class="text-info">No records there to delete</p>
+          </blockquote>
+        </div>
+        {% endif %}
+      
+       </div>
+    </form>
+  
+      </div>
+    
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>  
+</div>
+
+
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header  text-center">
+      <h3 class="card-title text-olive " >Academical Status</h3>
+      <div class="card-tools">
+        <div class="input-group input-group-sm" >
+          <i class="fas fa-history text-olive"></i>
+              
+        </div>
+      </div>
+    </div>
+   
+    <!-- /.card-header -->
+    <div class="card-body table-responsive p-3 ">
+      <table class="table table-striped table-borderless academical_table" >
+        <thead >
+          <tr>
+          
+            <th>Name</th>
+            <th>Batch</th>
+            <th>Semester</th>
+            <th>Status</th>
+            <th>GPA</th>
+            <th>CGPA</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+          <tr>
+           
+            <td>{{student.student}}</td>
+            <td>{{student.get_batch_display}}</td>
+           <td>{{student.get_semester_display}}</td>
+           <td>{{student.GPA}}</td>
+           <td>{{student.CGPA}}</td>
+           {% if student.academic_status == "Promoted" %}
+           <td class="text-success">Promoted</td>
+           {% else %}
+           <td class="text-danger">{{student.academic_status}}</td>
+           {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+
+
+  <!-- /.card -->
+</div>
+
+{% endblock %}
+{% block javascript %}
+
+
+
+<script>
+    $('.academical_table').DataTable({
+        ordering:false,
+        lengthMenu:[[5,10,15,50,-1],[5,10,15,50,"All"]],
+       
+    });
+</script>
+
+
+{% endblock %}

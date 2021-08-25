@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Certificate</title>
+    <style>
+       @page {
+        size: a4 landscape;
+        margin-top: 0cm;
+        margin-left: 2cm;
+        margin-right: 0px;
+         }
+         .image{
+             margin-left: 920px;
+             margin-top: 0px;
+             margin-bottom: 0px;
+         }
+         .logo{
+            margin-left: 380px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+         }
+         .univ{
+             margin-left: 300px;
+             margin-top: 0px;
+             margin-bottom: 0px;
+         }
+         .univ_header{
+            color:rgb(162, 194, 136);
+            margin-left: 195px;
+            font-size: 27px;
+            font-weight:bolder;
+            margin-top: 1px;
+            font-family: 'Times New Roman', Times, serif;
+            margin-bottom: 0px;
+            
+         }
+         .univ p{
+             margin-left: 30px;
+             font-size: 14 px;
+             margin-top: 0px;
+             font-family: 'Times New Roman', Times, serif
+             
+         }
+
+         .temp_header{
+            margin-left: 250px;
+            color: rgb(162, 194, 136);
+            text-decoration: underline;
+            font-size: 17px;
+            font-weight: lighter;
+            margin-bottom: 0px;
+
+         }
+         .certi{
+             margin-left: 270px;
+         }
+         .certi p{
+            font-size: 18px;
+            color: #000;
+            font-family: 'Times New Roman', Times, serif;
+            
+            
+         }
+         .qrcode{
+             margin-left: 800px;
+             page-break-after:always;
+         }
+         
+        
+        
+    </style>
+</head>
+<body>
+    {% for student in students %}
+    <div class="image">
+        <img class="image" src="{{student.profile.image.path}}" alt="profile" height="150px" width="114px" >
+       </div>
+    <div class="logo">
+        <img  src="{{student.institution.logo.path}}" alt="" height="130px">
+     </div> 
+     <h1 class="univ_header">{{student.institution}}</h1>
+    <div class="univ">
+        <p>
+            <strong> Tel 1:&nbsp; </strong> {{student.institution.phone_no1}} &nbsp; 
+            <strong>Tel 2:</strong>&nbsp;&nbsp;{{student.institution.phone_no2}}<br>
+            <strong>Fax :</strong> {{student.institution.fax_no}} &nbsp;
+            <strong>Website:</strong> {{student.institution.website}} <br>
+            <strong> P.O.Box:</strong>{{student.institution.pob}} &nbsp;
+            <strong>{{student.institution.city}}</strong> , Ethiopia
+         </p>
+    </div>
+    <h1 class="temp_header">TEMPORARY CERTIFICATE OF GRADUATE</h1>
+    <div class="certi">
+        <p>This is to certify that
+            <span style="color:rgb(223, 82, 82); text-decoration: underline; font-size: 20px; font-weight:700">{{student}}</span>
+            <br> graduate from school of <strong style="font-style: italic;">Electrical Engineering and Computing</strong> <br>
+           with BSc degree in <strong style="font-style: italic;">Computer Science and Engineering</strong>   <br>
+           (Major GPA of <strong> 3.5 </strong>and CGPA of  <strong>3.45</strong> ) <br> 
+           <span style="color: brown">On july 2, 2021 G,c</span> 
+        </p>
+    </div>
+    <div class="pending">
+        <p style="font-size: 18px; margin-left: 90px; font-family:'Times New Roman', Times, serif"> 
+         This Temproray certificate of graduation has been given pending the printing and issuance of actual diploma <br> and
+         transcript which will be given the completion of the obigation stated in the cost sharing scheme
+        </p>  
+ 
+        <h1  style="border-top: 1px solid black; margin-left: 390px; margin-right: 250px;">
+         <span style="margin-left: 500px;">Registrar</span></h1>
+    </div>
+    <div class="qrcode">
+        <img class="qrcode" src="{{student.profile.qr_code.path}} " alt="qr_code" height="130px ">
+       </div>
+       
+    {% endfor %}
+</body>
+</html>

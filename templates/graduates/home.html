@@ -1,0 +1,287 @@
+{% extends 'graduates/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %} Registrar Staff Dashboard {% endblock %}
+{% block first %}Home {% endblock %}
+{% block second %}Dashboard{% endblock %}
+{% block content %}
+
+
+<section class="content mt-5">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-olive">
+          <div class="card-header">
+            <h3 class="card-title"> <i class="fa fa-file-excel fa-lg mr-2 "></i> Statical Summery and Excel file upload</h3>
+            <div class="card-tools">
+              <div class="input-group input-group-sm" >
+                <i class="fas fa-graduation-cap text-white"></i>
+              </div>
+            </div>
+            </div>
+          
+           <div class="card-body ">
+                  <div class="row">
+                    <div class="col-12 p-2 ">
+                        <div>
+                            <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">                              
+                                {% if status == "approved" %}
+                                <li class="nav-item">
+                                  <a class="nav-link active" id="custom-tabs-four-dashboard-tab" data-toggle="pill" href="#custom-tabs-four-dashboard" role="tab"
+                                   aria-controls="custom-tabs-four-dashboard" aria-selected="true"><i class="fa fa-file-invoice mr-1"></i>  Analytical Summery </a>
+                                </li>
+                              <li class="nav-item">
+                                <a  class="nav-link" id="custom-tabs-four-status-tab" data-toggle="pill" 
+                                href="#custom-tabs-four-status" role="tab" aria-controls="custom-tabs-four-status" 
+                                aria-selected="false"> <i class="fa fa-user-plus text-navy"></i> Student Registration </a>
+                              </li>
+                             
+                              <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-four-certificate-tab" data-toggle="pill"
+                                 href="#custom-tabs-four-certificate" role="tab" aria-controls="custom-tabs-four-certificate"
+                                  aria-selected="false" > <i class="fa fa-history text-warning"></i> Academical Status</a>
+                              </li>
+                         
+                              <li class="nav-item">
+                                <a class="nav-link" id="custom-tabs-four-graduation-tab" data-toggle="pill"
+                                 href="#custom-tabs-four-graduation" role="tab" aria-controls="custom-tabs-four-graduation"
+                                  aria-selected="false" > <i class="fa fa-graduation-cap text-success"></i> Graduation Result</a>
+                              </li>
+                              {% endif %}
+
+                              {% if status == "expired" or status == "pending" %}
+
+                              <li class="nav-item">
+                                <a class="nav-link active" id="custom-tabs-four-dashboard-tab" data-toggle="pill" href="#custom-tabs-four-dashboard" role="tab"
+                                 aria-controls="custom-tabs-four-dashboard" aria-selected="true"><i class="fa fa-file-invoice mr-1"></i>  Analytical Summery </a>
+                              </li>
+                              <li class="nav-item">
+                                <a  class="nav-link disabled" id="custom-tabs-four-status-tab" data-toggle="pill" 
+                                href="#custom-tabs-four-status" role="tab" aria-controls="custom-tabs-four-status" 
+                                aria-selected="false"> <i class="fa fa-user-plus text-navy"></i> Student Registration </a>
+                              </li>
+                             
+                              <li class="nav-item">
+                                <a class="nav-link disabled" id="custom-tabs-four-certificate-tab" data-toggle="pill"
+                                 href="#custom-tabs-four-certificate" role="tab" aria-controls="custom-tabs-four-certificate"
+                                  aria-selected="false" > <i class="fa fa-history text-warning"></i> Academical Status</a>
+                              </li>
+                         
+                              <li class="nav-item">
+                                <a class="nav-link disabled" id="custom-tabs-four-graduation-tab" data-toggle="pill"
+                                 href="#custom-tabs-four-graduation" role="tab" aria-controls="custom-tabs-four-graduation"
+                                  aria-selected="false" > <i class="fa fa-graduation-cap text-success"></i> Graduation Result</a>
+                              </li>
+                              {% endif %}
+                            
+                  
+                            </ul>
+                          </div>
+                          <div class="card-body">
+                            <div class="tab-content" id="custom-tabs-four-tabContent">
+                              <div class="tab-pane fade show active" id="custom-tabs-four-dashboard" role="tabpanel" aria-labelledby="custom-tabs-four-dashboard-tab">
+                              {% include 'graduates/summery.html' with student=student acadamic_historys=acadamic_historys profile=profile %}
+                              </div>
+                              <div class="tab-pane fade" id="custom-tabs-four-status" role="tabpanel" aria-labelledby="custom-tabs-four-status-tab">
+                                
+                                <div class="container">
+                                  <div class="row">
+                                      <div class="col-md-5  p-3 bg-white">
+                                          <form action="upload/" method="POST" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <div class="form-group">
+                                                  <label for="student_registry"><span class="text-navy">  Excel File Input</span>
+                                                     <i class="fas fa-hand-holding-water text-truncate text-dark ml-1"></i></label>
+                                                  <div class="input-group">
+                                                    <div class="custom-file">
+                                                      <input type="file" class="custom-file-input" id="student_registry" name="myfile" required>
+                                                      <label class="custom-file-label" for="student_registry">Choose file</label>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                      <button type="submit" class="btn btn-dark input-group-append">Upload</button>
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                          </form> 
+                                      </div>
+                                      <div class="card-body clearfix col-md-5">
+                                        <blockquote class="quote-gray-dark">
+                                         <img width="540px" src="{% static 'dist/img/student.png' %}" alt="example_image" class="mb-3">
+                                         <div>
+                                          
+                                          <small class="text-indigo"><cite title="Source Title"> <i class="fa fa-angle-double-right"></i> <strong>  Make sure your excel file look like the one
+                                             provided as above in the image </strong>
+                                             </cite></small>
+                                            </div>
+                                        </blockquote>
+                                      </div>
+
+                                  </div>  
+                                </div>
+                              
+                              </div>
+                              <div class="tab-pane fade" id="custom-tabs-four-certificate" role="tabpanel" aria-labelledby="custom-tabs-four-certificate-tab">
+                              
+                                <div class="container">
+                                  <div class="row">
+                                      <div class="col-md-5 m-2  p-3 bg-white">
+                                          <form action="academic/" method="POST" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                              <div class="form-group">
+                                                  <label for="exampleInputFile"><span class="text-navy">  Excel File Input</span>
+                                                     <i class="fas fa-hand-holding-water text-truncate text-warning ml-1"></i></label>
+                                                  <div class="input-group">
+                                                    <div class="custom-file">
+                                                      <input type="file" class="custom-file-input" id="exampleInputFile" name="myfile" required>
+                                                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                      <button type="submit" class="btn btn-warning input-group-append">Upload</button>
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                          </form> 
+                                      </div>
+                                      <div class="card-body clearfix col-md-5">
+                                        <blockquote class="quote-warning">
+                                         <img height="140px" width="450px" src="{% static 'dist/img/status.png' %}" alt="example_image" class="mb-3">
+                                         <div>
+                                          
+                                          <small class="text-indigo"><cite title="Source Title"> <i class="fa fa-angle-double-right"></i> <strong>  Make sure your excel file look like the one
+                                             provided as above in the image </strong>
+                                             </cite></small>
+                                            </div>
+                                        </blockquote>
+                                      </div>
+                                  </div>  
+                                </div>
+                              </div>
+                              <div class="tab-pane fade " id="custom-tabs-four-graduation" role="tabpanel" aria-labelledby="custom-tabs-four-graduation-tab">
+                                <div class="container">
+                                  <div class="row">
+                                      <div class="col-md-5   p-3 bg-white">
+                                          <form action="graduation/" method="POST" enctype="multipart/form-data">
+                                              {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label for="exampleInputFile"><span class="text-black">  Excel File Input</span>
+                                                      <i class="fas fa-hand-holding-water text-truncate text-success ml-1"></i></label>
+                                                  <div class="input-group">
+                                                    <div class="custom-file">
+                                                      <input type="file" class="custom-file-input" id="exampleInputFile" name="myfile" required>
+                                                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                      <button type="submit" class="btn btn-success input-group-append">Upload</button>
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                          </form>  
+                                      </div>
+                                      <div class="card-body clearfix col-md-5">
+                                        <blockquote class="quote-success">
+                                         <img width="550px" src="{% static 'dist/img/graduation.png' %}" alt="example_image" class="mb-3">
+                                         <div>
+                                          
+                                          <p class="text-indigo"><cite title="Source Title"> <i class="fa fa-angle-double-right"></i> Make sure your excel file look like the one
+                                             provided as above in the image
+                                             </cite></p>
+                                            </div>
+                                        </blockquote>
+                                      </div>
+                                  </div>  
+                                </div>
+                              </div>
+                           
+                            </div>
+                          </div>
+                  
+                        </div>
+                      </div>
+              </div>
+            </div>
+              </div>
+          
+      </div>
+  </div>
+  
+
+</section>
+
+
+
+<section class="content mt-1">
+  <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fas fa-image text-indigo"></i>
+            Student  Image
+          </h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <blockquote class="quote-indigo" >
+            <p>Change student default profile before generating certificate for prospective graduates</p>
+            <small>if not the certificate will bear <cite title="Source Title"> the default image </cite></small>
+          </blockquote>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- ./col -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <i class="fa fa-file-excel"></i>
+            Excel Upload
+          </h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body clearfix">
+          <blockquote class="quote-secondary">
+            <p>Upload excile file according to example image provided on the upload interface</p>
+            <small>so as to get  <cite title="Source Title"> the desired effects </cite></small>
+          </blockquote>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- ./col -->
+  </div>
+  </div>
+ 
+  </section>
+
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+  $(function () {
+    bsCustomFileInput.init();
+  });
+  </script>
+
+{% endblock %}

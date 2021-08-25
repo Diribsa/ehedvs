@@ -1,0 +1,161 @@
+        {% extends 'super_admin/main.html' %}
+        {% load static %}
+        {% block subtitle %}Dashboard{% endblock %}
+        {% block first %}home {% endblock %}
+        {% block second %}dashboard{% endblock %}
+ 
+       {% block content%}
+  
+
+
+        <div class="row">
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box shadow">
+              <span class="info-box-icon bg-info"><i class=" nav-icon fa fa-database"></i></span>
+  
+              <div class="info-box-content">
+                <span class="info-box-text">Registered Institutions</span>
+                <span class="info-box-number">{{total_unv}}</span>
+              </div>
+            </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-12">
+              <div class="info-box shadow">
+                <span class="info-box-icon bg-success"><i class="fas fa-users"></i></span>
+    
+                <div class="info-box-content">
+                  <span class="info-box-text">System Users</span>
+                  <span class="info-box-number">{{users}}</span>
+                </div>
+              </div>
+              </div>
+
+              <div class="col-md-3 col-sm-6 col-12">
+                <div class="info-box shadow">
+                  <span class="info-box-icon bg-warning"><i class=" nav-icon fa fa-graduation-cap"></i></span>
+      
+                  <div class="info-box-content">
+                    <span class="info-box-text ">Prepared Certificates</span>
+                    <span class="info-box-number">0</span>
+                  </div>
+                </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-12">
+                  <div class="info-box shadow">
+                    <span class="info-box-icon bg-danger"><i class="nav-icon fa fa-search"></i></span>
+        
+                    <div class="info-box-content">
+                      <span class="info-box-text">Page views</span>
+                      <span class="info-box-number">0</span>
+                    </div>
+                  </div>
+                  </div>
+        </div>
+       
+
+        
+
+
+        <div class="row mt-5">
+          <div class="col-12">
+            <h4 class="text-center mb-3"><b>List of Institutions</b></h4>
+            <div class="card card-default">
+              <div class="card-header">
+                <h3 class="card-title">List of Institutions</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn  btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-tools">
+                
+                      <a  type="submit" class="btn  btn-outline-success btn-xs mr-5 text-xs " href="{% url 'super_admin:register' %}" >
+                        <i class="fas fa-plus-circle"> Add new</i>
+                      </a>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+   
+              
+
+              <div class="card-body table-responsive px-0">
+                <table class="table table-hover text-nowrap table-light">
+                  <thead  >
+                    <tr>
+                      <th>Logo</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone no</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for list in lists %}
+                    <tr >
+                      <td > <a href="{% url 'super_admin:univ' list.id%}"><img class="img-size-50 mr-3 img-circle" src="{{list.logo.url}}" alt=""></a> </td>
+                      <td>{{list.name}}</td>
+                      <td>{{list.email}}</td>
+                      <td>{{list.phone_no1}}</td>
+                      <td>
+                        <a href="{% url 'super_admin:update_unv' list.id %}" class="btn text-secondary px-0 "><i class="fas fa-pencil-alt  "></i></a>
+                      </td>
+                     <td>
+                       <a href="#" onclick="deletingUniversty({{list.id}})" class="btn text-danger px-0 "><i class="fas fa-trash-alt "></i></a>
+                     </td>
+                    </tr>
+                    {% endfor %}
+                   
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        
+        
+        {% endblock %}      
+
+
+        {% block javascript %}
+
+        <script>
+          function deletingUniversty(id){
+           Swal.fire({
+             "title":"Are you sure",
+             "text":"You want to delete this University ",
+             "icon":"question",
+             "showCancelButton":true,
+             "cancelButtonText":"No, Cancel",
+             "confirmButtonText":"Yes, Delete",
+             "reverseButtons":true,
+             "confirmButtonColor":"#dc3545",
+             "cancelButtonColor":"#17a2b8",
+             "width":330,
+             "height":70,
+
+
+           })
+           .then(function(result) {
+             if (result.isConfirmed){
+               window.location.href="/super_admin/delete_unv/"+id+"/"
+             }
+           })
+          }
+        
+          
+        
+        </script> 
+        
+        {% endblock %}      

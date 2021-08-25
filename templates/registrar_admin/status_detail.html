@@ -1,0 +1,70 @@
+{% extends 'registrar_admin/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %}Detail Academical Status {% endblock %}
+{% block first %}Home {% endblock %}
+{% block second %}Academical Status{% endblock %}
+{% block content%}
+
+<div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><span class="text-info">{{name}}</span>'s Academical status</h3>
+       {% if name.level_of_completion == 100.0 %}
+       <p class="float-right text-success"> <i class="fa fa-hand-paper"></i> has completed</p>
+       {% else %}
+       <p class="float-right text-warning"> <i class="fa fa-door-open"></i> Not yet completed </p>
+       {% endif %}
+      </div>
+      <div class="card-body p-0">
+        <table class="table table-striped ">
+          <thead>
+            <tr>
+              <th>Batch</th>
+              <th>Semester</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for student in students %}
+            <tr>
+              <td>{{student.get_batch_display}}</td>
+             <td>{{student.get_semester_display}}</td>
+             <td>
+               {% if student.academic_status == "failed" %}
+               <span class="text-danger">{{student.academic_status}}</span>
+               {% else %}
+               {{student.academic_status}}
+               {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer bg-white">
+        <div class="row border-top">
+        <div class="col-6 mt-3">
+          {% if name.department %}
+          <strong class="mr-2"> School:</strong><span class="text-primary font-weight-bolder">{{name.school}}</span> <br>
+          <strong class="mr-2">GPA:</strong> <span class="text-primary mr-1">{{graduate.GPA}} </span> 
+      
+          <strong class="mr-2"> CGPA:</strong><span class="text-primary font-weight-bolder">{{graduate.CGPA}}</span> <br>
+          <strong class="mr-2">Year:</strong> <span class="text-primary mr-1">{{name.department.year_required}} Year</span>
+      
+        {% else %}
+       <strong class="mr-2"> School:</strong><span class="text-primary font-weight-bolder">Not Specified</span> <br>
+       <strong class="mr-2">Year required:</strong> <span class="text-primary">?</span>
+          {% endif %}
+        </div>
+        <div class="col-6">
+        <img class="image float-right" src="{{name.profile.qr_code.url}}" alt="profile" height="120px"  >
+      </div>
+    </div>
+      </div>
+     
+    </div>
+ 
+  </div>
+  
+{% endblock %}

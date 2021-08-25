@@ -1,0 +1,83 @@
+       {% extends 'super_admin/main.html' %}
+        {% load static %}
+        {% block subtitle %}User Profile{% endblock %}
+        {% block first %}home {% endblock %}
+        {% block second %}user profile{% endblock %}
+ 
+       {% block content%}
+       <div class="card card-solid">
+        <div class="card-body pb-0">
+          <div class="row">
+                {% for list in lists %}
+                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                        <div class="card bg-default d-flex flex-fill bg-light">
+                          <div class="card-header text-muted border-bottom-0">
+                          Registrar Admin
+                          </div>
+                          <div class="card-body pt-0 ">
+                            <div class="row">
+                              <div class="col-7 ">
+                                <h2 class="lead text-capitalize "><b style="color: rgb(0, 0, 0);">{{list.user.username}}</b></h2>
+                                <p class="text-muted text-sm"><b>About: </b> Registrar Admin of <sapan style="color: #000; font-style: italic;">{{list.university}}</sapan></p>
+                                <ul class="ml-4 mb-0 fa-ul text-muted">
+                                  <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span> Email:{{list.user.email}}</li>
+                                  <li class="small"><span class="fa-li"><i class="fas fa-lg fa-calendar-alt"></i></span> Date Joined:{{list.user.date_joined}}</li>
+                                </ul>
+                              </div>
+                              <div class="col-5 text-center">
+                        
+                                <img src="{% static 'dist/img/user.png' %}" alt="user-avatar" class="img-circle img-fluid">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-footer">
+                            <div class="text-right">
+                              <a href="{% url 'super_admin:message_ra' list.user.id %}" class="btn btn-sm bg-teal">
+                                <i class="fas fa-comments"></i>
+                              </a>
+                              <a href="#" onclick="deletingUser({{list.user.id}})" class="btn btn-sm bg-danger">
+                                <i class="fas fa-trash-alt"></i>
+                              </a>
+                              <a href="#" class="btn btn-sm btn-primary">
+                                <i class="fas fa-user"></i> View Profile
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                </div>
+                {% endfor %}
+          </div>
+        </div>
+        </div>
+        
+      
+       {% endblock %}
+
+       {% block javascript %}
+
+       <script>
+         function deletingUser(id){
+          Swal.fire({
+            "title":"Are you sure",
+            "text":"You want to delete this User ",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"No, Cancel",
+            "confirmButtonText":"Yes, Delete",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545",
+            "cancelButtonColor":"#17a2b8",
+            "width":330,
+            "height":70,
+
+
+          })
+          .then(function(result) {
+            if (result.isConfirmed){
+              window.location.href="/super_admin/delete_user/"+id+"/"
+            }
+          })
+         }
+       </script> 
+       
+       {% endblock %}      

@@ -1,0 +1,118 @@
+{% extends 'graduates/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %}Certificate Generation{% endblock %}
+{% block first %}Home {% endblock %}
+{% block second %}Certificate{% endblock %}
+{% block content%}
+<!-- /.card -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header border-0">
+              <h3 class="card-title mb-1"> <i class="fa fa-print text-orange mr-1"></i>
+              <span style=" font-style: oblique; ,font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Certificate</span></h3>
+              <div class="card-tools">
+                <a >
+                <i class="fas fa-barcode  text-indigo" ></i>
+                </a>
+              </div>
+            </div>
+            <div class="card-body table-responsive p-3">
+              <table class="table table-striped table-valign-middle certificate table-borderless">
+                <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Student</th>
+                  <th>ID</th>
+                  <th>Batch</th>
+                  <th class=" text-center text-info">Competion Level</th>
+                  <th>Generate Certificate</th>
+                  <th>More</th>
+        
+                </tr>
+                </thead>
+                <tbody>
+                    {% for certificate in certificates %}
+                <tr>
+                  <td>
+                    <img src="{{certificate.profile.image.url}}" alt="student image" class="img-circle img-size-32 mr-2">
+                  </td>
+                  <td>{{certificate}}</td>
+                  <td>{{certificate.id}}</td>
+                  <td>
+                    <small class="text-success mr-1">
+                      
+                   {{certificate.registration_year.year}}
+                  </td>
+                  <td class="text-center">
+                    {% if certificate.level_of_completion == 0.0 %}
+                    <p class="text-info ">unpredictable</p>
+                    {% else %}
+                    {{certificate.level_of_completion|floatformat:2 }}
+                    <span class="text-info"><sup>%</sup></span>
+                    {% endif %}
+                  
+                </td>
+                  <td>
+                    {% if certificate.level_of_completion >= 100 %}
+                    <a  href="{% url 'graduates:single_certificate' certificate.id %}" class="text-muted text-center " disable>
+                      <i class="fas fa-file-download ml-4 text-orange btn-sm mr-5"></i>
+                       
+                    </a>
+                    {% else %}
+                    <button class="btn btn-sm" disabled><i class="fas fa-file-download ml-4 text-orange mr-5"></i></button>
+                    {% endif %}
+                  </td>
+                  <td>
+                    <a href="{% url 'graduates:status_detail' certificate.id %}"><i class="fa fa-angle-double-right"></i></a>
+                  </td>
+                 
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+   <!--
+    <div class="col-md-3">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <i  class="fa fa-id-card-alt text-indigo mr-1"></i>
+              <span class="font-italic">Generate multiple certificate</span>
+            </h3>
+          </div>
+         
+          <div class="card-body">
+            <p>YET TO COME</p>
+          </div>
+          
+        </div>
+      
+      </div>
+
+-->
+
+</div>
+
+ 
+ <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+ <!-- Bootstrap 4 -->
+ <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+ <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+ <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+ 
+ <!-- e-HEDVS App -->
+ <script src=" {% static 'dist/js/e-hedvs.min.js' %}"></script>
+ <script>
+     $('.certificate').DataTable({
+          ordering:false,
+         lengthMenu:[[5,10,15,50,-1],[5,10,15,50,"All"]],
+        
+     });
+ </script>
+ 
+  
+{% endblock%}

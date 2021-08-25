@@ -1,0 +1,73 @@
+{% extends 'registrar_admin/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block subtitle %}Certificate Archive{% endblock %}
+{% block first %}Home {% endblock %}
+{% block second %}Archive{% endblock %}
+{% block content%}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header border-0">
+              <h3 class="card-title mb-1"> <i class="fa fa-print text-orange mr-1"></i>
+              <span style=" font-style: oblique; ,font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Certificate</span></h3>
+              <div class="card-tools">
+                <a >
+                <i class="fas fa-barcode  text-indigo" ></i>
+                </a>
+              </div>
+            </div>
+            <div class="card-body table-responsive p-3">
+              <table class="table table-striped table-valign-middle certificate table-borderless">
+                <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Student</th>
+                  <th>ID</th>
+                  <th>Department</th>
+                  <th>Batch</th>
+                  <th>More</th>
+        
+                </tr>
+                </thead>
+                <tbody>
+                    {% for certificate in certificates %}
+                <tr>
+                  <td>
+                    <img src="{{certificate.profile.image.url}}" alt="student image" class="img-circle img-size-32 mr-2">
+                  </td>
+                  <td>{{certificate}}</td>
+                  <td>{{certificate.id}}</td>
+                  <td>{{certificate.department}}</td>
+                  <td>
+                    <small class="text-success mr-1">
+                      
+                   {{certificate.registration_year.year}}
+                  </td>
+                  <td>
+                    <a href="{% url 'registrar_admin:status_detail' certificate.id %}"><i class="fa fa-angle-double-right"></i></a>
+                  </td>
+                 
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+
+</div>
+ 
+ 
+  
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $('.certificate').DataTable({
+         ordering:false,
+        lengthMenu:[[3,10,15,50,-1],[3,10,15,50,"All"]],
+       
+    });
+</script>
+{% endblock %} 

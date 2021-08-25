@@ -1,0 +1,158 @@
+{% extends 'registrar_admin/main.html' %}
+{% load static %}
+{% block subtitle %}Dashboard{% endblock %}
+{% block first %}home {% endblock %}
+{% block second %}dashboard{% endblock %}
+{% block content%}
+<div class="row">
+    
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card card-info shadow-sm">
+            <div class="card-header">
+              <h3 class="card-title">Recent registered Faculties</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus text-white"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0 ">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Faculty  Name</th>
+                    <th>Program</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+         {% for faculty in faculties %}
+                  <tr>
+                    <td>{{faculty.name}}</td>
+                    <td>{{faculty.total_programs}}</td>
+                 
+                    <td class="text-right py-0 align-middle">
+                      {% if request.user.is_registrar_admin %}
+                      <div class="btn-group btn-group-sm">
+                        <a href="#" onclick="deletingFaculty({{faculty.id}})"><i class="fa fa-trash-alt text-lg text-danger mr-3"></i></a>
+                      </div>
+                      {% endif %}
+                    </td>
+                
+                 
+                  </tr>
+                  {% endfor%}
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+    <div class="col-6">
+        <div class="card card-info shadow-sm">
+            <div class="card-header">
+              <h3 class="card-title ">Recent registered Programs</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool"  data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0 ">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>year required</th>
+                    <th> type of degree</th>
+                  </tr>
+                </thead>
+                <tbody>
+         {% for program in programs %}
+                  <tr>
+                    <td>{{program.name}}</td>
+                    <td>{{program.year_required}}</td>
+                    <td>{{program.degree_type}}</td>
+                   
+                   
+                    <td class="text-right py-0 align-middle">
+                      {% if request.user.is_registrar_admin %}
+                      <div class="btn-group btn-group-sm">
+                        
+                        <a href="{% url 'registrar_admin:update_program' program.id  %}" ><i class="fa fa-edit text-lg mr-2"></i></a>
+                       
+                        <a href="#" onclick="deletingProgram({{program.id}})"><i class="fa fa-trash-alt text-lg text-danger"></i></a>
+                      </div>
+                      {% endif %}
+                    </td>
+                   
+                 
+                  </tr>
+                  {% endfor%}
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascript %}
+
+
+<script>
+  function deletingFaculty(id){
+   Swal.fire({
+     "title":"Are you sure",
+     "text":"You want to delete this Faculty ",
+     "icon":"question",
+     "showCancelButton":true,
+     "cancelButtonText":"No, Cancel",
+     "confirmButtonText":"Yes, Delete",
+     "reverseButtons":true,
+     "confirmButtonColor":"#dc3545",
+     "cancelButtonColor":"#17a2b8",
+     "width":330,
+     "height":70,
+
+
+   })
+   .then(function(result) {
+     if (result.isConfirmed){
+       window.location.href="/registrar_admin/delete_faculty/"+id+"/"
+     }
+   })
+  }
+
+
+  function deletingProgram(id){
+   Swal.fire({
+     "title":"Are you sure",
+     "text":"You want to delete Program ",
+     "icon":"question",
+     "showCancelButton":true,
+     "cancelButtonText":"No, Cancel",
+     "confirmButtonText":"Yes, Delete",
+     "reverseButtons":true,
+     "confirmButtonColor":"#dc3545",
+     "cancelButtonColor":"#17a2b8",
+     "width":330,
+     "height":70,
+
+
+   })
+   .then(function(result) {
+     if (result.isConfirmed){
+       window.location.href="/registrar_admin/delete_program/"+id+"/"
+     }
+   })
+  }
+
+</script> 
+
+{% endblock %}   

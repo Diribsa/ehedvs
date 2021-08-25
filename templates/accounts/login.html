@@ -1,0 +1,89 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+   <!-- Font Awesome Icons -->
+   <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+   <!-- Theme style -->
+   <link rel="stylesheet" href="{% static 'dist/css/e-hedvs.min.css ' %}">
+   <link rel="stylesheet" href="{% static 'dist/css/login.css ' %}">
+
+    <!-- Bootstrap CSS -->
+   
+    
+    <!-- Style -->
+    <title>e-HEDVS | Log in</title>
+  </head>
+  <body>
+  <div class="content mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6" style="margin-top: 70px;">
+          <img src="{% static 'dist/img/user_login.png' %}" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="mb-4 ">
+              <div class="login-logo">
+                <img src="{% static 'dist/img/gra.jpg' %}" alt="User Avatar" class="img-size-50  mr-3 img-circle"
+                 style="width: 70px; height: 70px; border-radius: 50%; margin-left: 45px;">
+               <div class="mb-5"  style="margin-left: 25px;">
+                <h3><b class="text-leading">e</b>-<span style="font-family: Arial, Helvetica, sans-serif;">HEDVS</span></h3>
+               </div>
+              </div>
+            </div>
+            {% for message in messages %}
+             <p class="text-danger" style="font-family: Arial, Helvetica, sans-serif;"> <i class="fa fa-info-circle text-purple mr-2"></i> {{message}}</p>
+             {% endfor %}
+          
+            <div class="login" style="opacity: 0.95;">
+            <form action="#" method="post">
+                {% csrf_token %}
+              
+
+              <div class="form-group ">
+                <label for="username" class="text-purple">Username</label>
+                <input type="text" name="username" class="form-control" id="username" required>
+
+              </div>
+              <div class="form-group ">
+                <label class="text-purple" for="password">Password</label>
+                <input type="password" name="password" class="form-control" id="password" required>
+                
+              </div>
+              
+              
+              <div class="d-flex mb-5 align-items-center">
+                <input class="mr-2 " type="checkbox"/> 
+                <label class="control control--checkbox mb-0 text-secondary "><span class="caption">  Remember me</span>
+                  
+                </label>
+                <span class="ml-auto"><a href="{% url 'password_reset' %}" class="forgot-pass">Forgot Password ?</a></span> 
+              </div>
+
+              <input type="submit" value="Log In" class="btn btn-block btn-primary"> 
+            </form>
+            </div>
+           
+            </div>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- e-HEDVS App -->
+<script src=" {% static 'dist/js/e-hedvs.min.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+.btn-primary{
+    color: #fff;
+    background-color: #6c63ff;
+    border-color: #6c63ff;
+}
+.btn-primary:hover{
+    color: #fff;
+    background-color: #6c63ff;
+    border-color: #6c63ff;
+
+
+}
+.text-leading{
+    color:#6c63ff;
+}
+.forgot-pass{
+    color:#6c63ff
+}

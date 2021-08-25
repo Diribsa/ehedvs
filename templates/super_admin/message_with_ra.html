@@ -1,0 +1,151 @@
+{% extends 'super_admin/main.html' %}
+{% load static %}
+{% block subtitle %}Messaging{% endblock %}
+{% block first %}home {% endblock %}
+{% block second %}dashboard{% endblock %}
+{% block content%}
+<div class="card">
+    <div class="card-body">
+      <div class="row">
+       <div class="col-md-4">
+      <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm">
+        <div class="card-header">
+          <h3 class="card-title">Send Message</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+              <i class="fas fa-comments"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <!-- Conversations are loaded here -->
+          <div class="direct-chat-messages">
+            <!-- Message. Default to the left -->
+            <div class="direct-chat-msg">
+              <div class="direct-chat-infos clearfix">
+                <span class="direct-chat-name float-left text-capitalize">{{last_message.sender}}</span>
+                <span class="direct-chat-timestamp float-right">{{last_message.timestamp|timesince}} ago</span>
+              </div>
+              <!-- /.direct-chat-infos -->
+              <img class="direct-chat-img" src="{{last_message.sender.user.image.url }}" alt="Message User Image">
+              <!-- /.direct-chat-img -->
+              <div class="direct-chat-text">
+                {{last_message}}
+              </div>
+              <!-- /.direct-chat-text -->
+            </div>
+            <!-- /.direct-chat-msg -->
+
+            <!-- Message to the right -->
+            {% for message in last_messages %}
+            <div class="direct-chat-msg right">
+              <div class="direct-chat-infos clearfix">
+                <span class="direct-chat-name float-right text-capitalize" >{{message.sender}}</span>
+                <span class="direct-chat-timestamp float-left">{{message.timestamp|timesince}} ago</span>
+              </div>
+              <!-- /.direct-chat-infos -->
+              <img class="direct-chat-img" src="{% static 'dist/img/user.png' %}" alt="Message User Image">
+              <!-- /.direct-chat-img -->
+              <div class="direct-chat-text">
+              {{message}}
+              </div>
+              <!-- /.direct-chat-text -->
+            </div>
+            {% endfor %}
+            <!-- /.direct-chat-msg -->
+          </div>
+          <!--/.direct-chat-messages-->
+
+          <!-- Contacts are loaded here -->
+          <div class="direct-chat-contacts">
+            <ul class="contacts-list">
+              <li>
+                <a href="#">
+                  <img class="contacts-list-img" src="{% static 'dist/img/1.jpg' %}" alt="User Avatar">
+
+                  <div class="contacts-list-info">
+                    <span class="contacts-list-name">
+                      Count Dracula
+                      <small class="contacts-list-date float-right">2/28/2015</small>
+                    </span>
+                    <span class="contacts-list-msg">How have you been? I was...</span>
+                  </div>
+                  <!-- /.contacts-list-info -->
+                </a>
+              </li>
+              <!-- End Contact Item -->
+            </ul>
+            <!-- /.contatcts-list -->
+          </div>
+          <!-- /.direct-chat-pane -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          <form action="" method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+              <input type="text" name="subject" placeholder="Type Message ..." class="form-control">
+              <span class="input-group-append">
+                <button type="submit" class="btn btn-success">Send</button>
+              </span>
+            </div>
+          </form>
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!--/.direct-chat -->
+    </div>
+
+    
+     <div class="col-md-8">
+        <div class="card-body table-responsive p-3">
+          <table class="table table-striped table-valign-middle certificate table-borderless">
+            
+            <thead>
+              
+            <tr>
+              <th>Date sent </th>
+              <th>Request</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+            </thead>
+            
+            <tbody>
+              {% for request in requests %}  
+            <tr>
+              <td>
+                {{request.timestamp}}
+              </td>
+              <td>{{request.request}} </td>
+              {% if request.status == 'expired' %}
+              <td class="text-danger">{{request.status}}</td>
+              {% endif %}
+              {% if request.status == 'pending' %}
+              <td class="text-info">{{request.status}}</td>
+              {% endif %}
+              {% if request.status == 'approved' %}
+              <td class="text-success">{{request.status}}</td>
+              {% endif %}
+              <td> <a href="{% url 'registrar_admin:delete_request' request.id %}"><i class="fa fa-trash-alt text-warning"></i></a> </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+

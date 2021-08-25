@@ -1,0 +1,157 @@
+{% extends 'registrar_admin/main.html' %}
+        {% load static %}
+        {% load crispy_forms_tags %}
+        {% block subtitle %} Activity Logs {% endblock %}
+        {% block first %}home {% endblock %}
+        {% block second %}activity logs{% endblock %}
+ 
+        {% block content%}
+         <!-- Main content -->
+      <section class="content mt-3">
+        <div class="row">
+          <div class="col-md-3" >
+            <a href="#" class="btn btn-info btn-block mb-3"> <i class="fa fa-user-ninja"></i> Registrar Staffs</a>
+  
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"> Top Recent Users <i class="fa fa-accessible-icon"></i></h3>
+  
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <ul class="nav nav-pills flex-column">
+                  <li class="nav-item active p-1">
+                    <a href="#" class="nav-link">
+                      <div class="user-block">
+                        <img class="img-circle img-bordered-sm mr-3 " src="{% static 'dist/img/1.jpg' %}" alt="user image">
+                      <span class="text-info">Biru Alemu <sup class="badge bg-warning float-right">40</sup></span>
+                      </div>
+                      
+                    </a>
+                  </li>
+                  <li class="nav-item p-1">
+                    <a href="#" class="nav-link">
+                      <div class="user-block">
+                        <img class="img-circle img-bordered-sm mr-3 " src="{% static 'dist/img/1.jpg' %}" alt="user image">
+                      <span class="text-info">Biruk Mokenen <sup class="badge bg-warning float-right">30</sup> </span>
+                      </div>
+                      
+                    </a>
+                  </li>
+              
+                  <li class="nav-item p-1">
+                    <a href="#" class="nav-link">
+                      <div class="user-block">
+                        <img class="img-circle img-bordered-sm mr-3 " src="{% static 'dist/img/1.jpg' %}" alt="user image">
+                      <span class="text-info">Birhanu Hailu <sup class="badge bg-warning float-right">15</sup></span>
+                      </div>
+                      
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Activity log type</h3>
+  
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <ul class="nav nav-pills flex-column">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link ">
+                      <i class="fa fa-user-graduate text-info mr-1"></i> 
+                      Student Registry <sup class="badge bg-info float-right">{{student_registry}}</sup>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="far fa-user-circle text-info mr-1"></i>
+                      Academic status Upload <sup class="badge bg-info float-right">{{academic_upload}}</sup>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="fa fa-certificate text-indigo mr-1 "></i>
+                      Certificate Generation <sup class="badge bg-info float-right">{{certificate_generation}}</sup>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="far fa-user-circle text-danger mr-1"></i>
+                    Academic status Deletion<sup class="badge bg-danger  float-right">{{acadmic_status_deletion}}</sup>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      <i class="fa fa-user-graduate text-danger mr-1 "></i>
+                      Student Deletion <sup class="badge bg-danger float-right">{{student_deletion}}</sup>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+         
+          <div class="col-md-9 ">
+            <div class="card card-info card-outline">
+              <div class="card-header">
+                <h3 class="card-title text-navy"> <i class="fa fa-sitemap text-indigo mr-1"></i> List of Activity logs</h3>
+                <div class="card-tools">
+                  <div class="input-group-append">
+                    <i class="fas fa-history text-info"></i>
+                  </div>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <div class="card-body">
+             <table class="table table-bordered table-hover student_table">
+              <thead>
+                <tr>
+                  <th style="width: 350px; color: rgba(143, 126, 126, 0.377);">Accessed on Ip Address</th>
+                  <th class="text-center" style="color: rgb(214, 212, 209);" > Activity log</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for act in activities %}
+                <tr>
+                  <td class="text-uppercase" style="font-size: 12px; font-weight: 700;"> {{act.ip_address}} </td>
+                  <td> <a href="" style="font-size: smaller; color: black;" >{{act}}</a></td>
+                 
+                </tr>
+                {% endfor %}
+                
+              </tbody>
+             </table>
+              </div>
+          </div>
+          </div>
+           
+          </div>
+      </section>
+      {% endblock %}
+      {% block javascript %}
+
+    <script>
+          $('.student_table').DataTable({
+               ordering:false,
+              lengthMenu:[[5,10,15,50,-1],[5,10,15,50,"All"]],
+             
+          });
+      </script>
+      
+       
+       {% endblock %} 

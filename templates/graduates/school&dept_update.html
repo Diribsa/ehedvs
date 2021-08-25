@@ -1,0 +1,66 @@
+{% extends 'graduates/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block subtitle %} {% endblock %}
+{% block first %}Home {% endblock %}
+{% block second %}profile{% endblock %}
+{% block content%}
+
+{% if no_formset > 0 %}
+<div class="container card p-3">
+    <form action="" method="POST">
+   
+        <div class="col-md-12">
+            <div class="card-body table-responsive p-3" style="height: 350px;">
+              <table class="table table-valign-middle table-borderless table-head-fixed student_table text-nowrap">
+                {% csrf_token %}
+                {{formset.management_form}}
+
+               
+                <thead >
+                <tr>
+                  <th>Student ID</th>
+                  <th>School</th>
+                  <th>Department</th>
+                </tr>
+                </thead>
+                
+                <tbody>
+                    {% for form in formset %}
+                    <tr>
+                        <td>
+                            
+                                {% render_field form.id class="form-control text-info" %}
+                            
+                           
+                        </td>
+                        <td>
+                           
+                                {% render_field form.school class="form-control text-success" %}
+                           
+                        </td>
+                        <td>
+
+                                {% render_field form.department class="form-control text-primary" %}
+                          
+                        </td>
+                       
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+        </div>
+    <input type="submit" class="btn btn-success  mt-4" value="Submit">
+    </form>
+</div>
+{% else %}
+<h1>You have already updated school and department of all student you have registered</h1>
+{% endif %}
+
+
+
+
+    {% endblock %}
+    

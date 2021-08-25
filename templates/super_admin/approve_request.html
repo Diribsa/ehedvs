@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-HECAS|request_approve</title>
+    <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css ' %}">
+</head>
+<body>
+    <div class="container mt-4 ">
+    <div class="col-md-5  ">
+    <p>Do you want this request to be approved ?</p>
+    <form action="{% url 'super_admin:approve_request' subject.id %}" method="POST">
+        {% csrf_token %}
+        <a href="{% url 'super_admin:view_request' %}" class="btn btn-lg btn-info ml-2">Cancel</a>
+        <input type="submit" name='delete' value="Yes" class="btn btn-lg btn-danger ">
+
+    </form>
+    </div>
+</div>
+</body>
+</html>
